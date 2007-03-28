@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+    <TITLE>Online Gnuplot Processor</TITLE>
+</HEAD>
+<BODY>
+
+<H1>Gnuplot Web Interface</H1>
+
+<table border=1><tr>
+<td>
+    Gnupulot 2-D Math:<br>
+    <form action="/gnuplot-cgi-bin/gnuplot.pl" method="get">
+      <input type="hidden" name="mode" value="math-2d">
+      f(x): <textarea cols=50 rows=1 name="thebox" align="top">sin(x)</textarea><br>
+      <ul><li>sin(x)
+	  <li>2*(x)
+	  <li>2*(x) - x**2
+      </ul>
+      <input type="submit" value="plot" align="middle">
+    </form>
+</td>
+<td>
+    Gnupulot 3-D Math:<br>
+    <form action="/gnuplot-cgi-bin/gnuplot.pl" method="get">
+      <input type="hidden" name="mode" value="math-3d">
+      f(x,y): <textarea cols=50 rows=1 name="thebox" align="top">sin(sqrt(x**2+y**2))/sqrt(x**2+y**2)</textarea><br>
+      <ul><li>sin(sqrt(x**2+y**2))/sqrt(x**2+y**2)
+	  <li>y**2 - x**2
+      </ul>
+      <input type="submit" value="plot" align="middle">
+    </form>
+</td>
+
+</tr></table>
+
+<hr>
+
+Gnuplot Financial:
+<form action="/gnuplot-cgi-bin/gnuplot.pl" method="get">
+  <input type="hidden" name="mode" value="financial">
+
+  <table>
+  <tr><td>start date: </td>
+      <td><input type="textarea" value="31-May-04" name="startdate" align="top"></td>
+  </tr>
+  <tr>
+      <td>end date: </td>
+      <td><input type="textarea" value="11-Jun-04" name="enddate" align="top"></td>
+  <tr>
+  <td><input type="radio" name="company" value="ibm" checked>ibm<br>
+  <input type="radio" name="company" value="cisco" > cisco<br></td>
+  <td><input type="radio" name="plot-style" value="points" checked> points <br>
+  <input type="radio" name="plot-style" value="candles"> candles <br>
+  </tr>
+  </table>
+  <input type="submit" value="plot" align="middle"></td>
+
+</form>
+
+<hr>
+See also:
+<ul>
+<li><a href="http://www-128.ibm.com/developerworks/library/l-gnuplot/">Visualize your data with gnuplot</a>
+</ul>
+
+
+</body>
+</head>

@@ -1,0 +1,13 @@
+Set this up /etc/apatche2/apache2.conf with something like:
+
+Alias /gnuplot/ /home/thartman/learning/gnuplot/
+
+ScriptAlias /gnuplot-cgi-bin/ /home/thartman/learning/gnuplot/cgi-bin/
+<Directory "/home/thartman/learning/gnuplot/cgi-bin">
+    AllowOverride None
+    Options None
+    Order allow,deny
+    Allow from all
+</Directory>
+
+Alias /gnuplot-plots/ /home/thartman/tmp/plots/
