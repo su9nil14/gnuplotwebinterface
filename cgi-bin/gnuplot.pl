@@ -7,11 +7,14 @@ use CGI::Carp qw(fatalsToBrowser);
 
 my $mode = param( 'mode' ) or die "no mode";
 
+my $DEBUG=0;
+
 $ENV{"PATH"} = "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/bin/X11";
 
 my $host="64.22.71.11";
-my $virtualdir="gnuplot-plots";
-my $outdir="/home/thartman/tmp/plots";
+my $virtualdir="gnuplot/tmp";
+
+my $outdir="../tmp";
 my $outps="plot.ps";
 my $outpng = "plot.png";
 
@@ -29,7 +32,9 @@ my $gnuplotScript="$gnuplotScriptDir/save-ibm-stock-price.plt";
 
 system("./clean.sh");
 my $plot_cmd= get_plot_command($mode);
-#die "plot cmd: $plot_cmd\n"; # useful for debugging
+
+die "plot cmd: $plot_cmd\n" if $DEBUG;
+
 system($plot_cmd);
 print CGI->new->redirect("$ploturl");
 
