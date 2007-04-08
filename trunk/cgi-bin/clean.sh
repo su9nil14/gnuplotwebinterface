@@ -1,1 +1,1 @@
-rm -f /home/thartman/tmp/plots/*
+rm -f ../tmp/*
