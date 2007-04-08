@@ -1,9 +1,10 @@
-Set this up /etc/apatche2/apache2.conf with something like:
+# Set this up /etc/apatche2/apache2.conf with something like:
+# restart apache server with apache2 -k restart
 
-Alias /gnuplot/ /home/thartman/learning/gnuplot/
+Alias /gnuplot/ /home/thartman/websites/gnuplotwebinterface/gnuplot
 
-ScriptAlias /gnuplot-cgi-bin/ /home/thartman/learning/gnuplot/cgi-bin/
-<Directory "/home/thartman/learning/gnuplot/cgi-bin">
+ScriptAlias /gnuplot-cgi-bin/ /home/thartman/websites/gnuplotwebinterface/gnuplot/cgi-bin/
+<Directory "/home/thartman/websites/gnuplotwebinterface/gnuplot/cgi-bin">
     AllowOverride None
     Options None
     Order allow,deny
