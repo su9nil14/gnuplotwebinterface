@@ -3,7 +3,8 @@ module Common where
 gnuplot_png_settings = "set terminal png transparent nocrop enhanced size 600,400\n\
                         \  set pm3d implicit at s"
 
-gnuplot_math_settings = "set border 4095 \n\
+gnuplot_math_settings =  gnuplot_png_settings ++ "\n" ++
+                         "set border 4095 \n\
                          \  set xlabel \"x\" \n\
                          \  set ylabel \"y\""
 
