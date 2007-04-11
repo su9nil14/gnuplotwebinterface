@@ -9,8 +9,15 @@ main = do args <- getArgs
             [style,function] -> gen_gnuplot_script style function
             _                    -> error $ "arg count does not equal 2. args: : " ++ ( show args ) ++ "\n" ++ usagemsg
 
-gen_gnuplot_script style function = case style of 
-                                      "math-2d" -> do putStrLn $ gnuplot_png_settings ++ "\n" ++
-                                                                 gnuplot_math_settings ++ "\n" ++
-                                                                 "plot " ++ function
-                                      _         -> error $ "bad stle: " ++ style
+style_to_plotcmd =  [("math-2d","plot"),("math-3d","splot")]
+
+{-
+
+| Just plotcmd
+    <- lookup style_to_plotcmd style
+    = putStrLn $ gnuplot_math_settings ++ "\n" ++ plotcmd ++ " "  ++ function
+| otherwise = error $ "bad style: " ++ style
+-}
+
+gen_gnuplot_script style function | style == "math-2d" = putStrLn $ gnuplot_math_settings ++ "\n" ++ "  plot " ++ function
+                                  | otherwise = error $ "bad style: " ++ style
