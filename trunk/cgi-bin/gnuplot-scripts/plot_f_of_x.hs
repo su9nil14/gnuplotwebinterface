@@ -1,4 +1,4 @@
-#!/usr/lib/ghc-6.6/bin/runghc
+#!/usr/lib/ghc-6.6/bin/runghc 
 import System
 import Common 
 
@@ -11,13 +11,7 @@ main = do args <- getArgs
 
 style_to_plotcmd =  [("math-2d","plot"),("math-3d","splot")]
 
-{-
-
-| Just plotcmd
-    <- lookup style_to_plotcmd style
-    = putStrLn $ gnuplot_math_settings ++ "\n" ++ plotcmd ++ " "  ++ function
-| otherwise = error $ "bad style: " ++ style
--}
-
-gen_gnuplot_script style function | style == "math-2d" = putStrLn $ gnuplot_math_settings ++ "\n" ++ "  plot " ++ function
+gen_gnuplot_script style function | Just plotcmd
+                                      <- lookup style style_to_plotcmd 
+                                      = putStrLn $ gnuplot_math_settings ++ "\n" ++ plotcmd ++ " "  ++ function
                                   | otherwise = error $ "bad style: " ++ style
