@@ -1,4 +1,5 @@
 #!/usr/lib/ghc-6.6/bin/runghc 
+{-# OPTIONS_GHC -fglasgow-exts #-} 
 import System
 import Common 
 
