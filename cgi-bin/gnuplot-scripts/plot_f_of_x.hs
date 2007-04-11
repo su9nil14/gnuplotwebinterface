@@ -7,7 +7,7 @@ main = do args <- getArgs
                          "                $ runghc plot_f_of_x.hs math-3d 'sin (x)'"
           case args of
             [style,function] -> gen_gnuplot_script style function
-            _                -> error $ "arg count does not equal 2. args: : " ++ ( show args ) ++ "\n" ++ usagemsg
+            _                -> error $ "bad arguments: " ++ ( show args ) ++ "\n" ++ usagemsg
 
 
 
