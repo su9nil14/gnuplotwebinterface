@@ -9,10 +9,9 @@ gnuplot_math_settings =  gnuplot_png_settings ++ "\n" ++
                          \  set ylabel \"y\""
 
 gnuplot_timeseries_settings = gnuplot_png_settings ++ "\n" ++
-                              "set xdata time\n" ++  	                -- The x axis data is time
-                              "set timefmt \"%d-%b-%y\" \n" ++	-- The dates in the file look like 10-Jun-04
-                              "set format x \"%b %d\""	        -- On the x-axis, we want tics like Jun 10'
-
+                              "set xdata time           # The x axis data is time \n" ++ 
+                              "set timefmt \"%d-%b-%y\" # The dates in the file look like 10-Jun-04 \n" ++	
+                              "set format x \"%b %d\"   #On the x-axis, we want tics like Jun 10"
 
 gen_gnuplot_math_script style function = let maybePlotCmd = lookup style style_to_plotcmd 
                                              style_to_plotcmd =  [("math-2d","plot"),("math-3d","splot")]
@@ -33,8 +32,7 @@ gen_gnuplot_financial_script company displaymode startDate endDate
                   maybeTitleEnd ) of
                 ( Just companyfile,
                   Just modestring,
-                  Just titleEnd)
-                  -> putStrLn $ gnuplot_timeseries_settings ++ "\n" ++
+                  Just titleEnd) -> putStrLn $ gnuplot_timeseries_settings ++ "\n" ++
                               "plot [\"" ++ startDate ++ "\":\"" ++ endDate ++ "\"]"
                               ++ " '" ++ companyfile ++ "'"
                               ++ modestring
