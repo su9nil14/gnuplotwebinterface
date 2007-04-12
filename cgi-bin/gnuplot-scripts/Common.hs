@@ -10,7 +10,7 @@ gnuplot_math_settings =  gnuplot_png_settings ++ "\n" ++
 
 gnuplot_timeseries_settings = gnuplot_png_settings ++ "\n" ++
                               "set xdata time           # The x axis data is time \n" ++ 
-                              "set timefmt \"%d-%b-%y\" # The dates in the file look like 10-Jun-04 \n" ++	
+                              "set timefmt \"%d-%b-%y\" # The dates in the file look like 10-Jun-04 \n" ++
                               "set format x \"%b %d\"   #On the x-axis, we want tics like Jun 10"
 
 gen_gnuplot_math_script style function = let maybePlotCmd = lookup style style_to_plotcmd 
@@ -36,6 +36,7 @@ gen_gnuplot_financial_script company displaymode startDate endDate
                               "plot [\"" ++ startDate ++ "\":\"" ++ endDate ++ "\"]"
                               ++ " '" ++ companyfile ++ "'"
                               ++ modestring
-                              ++ " title \" " ++ company ++ " " ++ titleEnd ++ "\""
+                              ++ " title \"" ++ company ++ " " ++ titleEnd ++ "\""
                 _ -> error $ "bad lookup. " ++ company ++     " -> company file: " ++ ( show maybeCompanyFile ) ++ "\n" ++
-                             "            " ++ displaymode ++ " -> displaymode: "  ++ ( show maybeModeString ) 
+                             "            " ++ displaymode ++ " -> displaymode: "  ++ ( show maybeModeString ) ++ "\n" ++
+                             "            " ++ displaymode ++ " -> titleEnd: "     ++ ( show maybeTitleEnd) 
