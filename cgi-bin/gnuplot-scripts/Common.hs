@@ -18,3 +18,14 @@ gen_gnuplot_math_script style function = let maybePlotCmd = lookup style style_t
                                            in case maybePlotCmd of
                                                 Just plotcmd -> putStrLn $ gnuplot_math_settings ++ "\n" ++ plotcmd ++ " "  ++ function
                                                 _            -> error $ "bad style: " ++ style
+
+gen_gnuplot_financial_script company displaymode startDate endDate
+    = let maybeCompanyFile = lookup company company_to_companyfile 
+          maybeModeString = lookup displaymode displaymode_to_modestring
+          company_to_companyfile =  [("math-2d","plot"),("math-3d","splot")]
+          displaymode_to_modestring = [("",""),("","")]
+        in case ( maybeCompanyFile, maybeModeString ) of
+             ( Just companyfile, Just displaymodestring )  -> putStrLn $ gnuplot_math_settings ++ "\n" ++
+                                                                         "plot "  
+             _            -> error $ "bad lookup. " ++ company ++     " -> company file: " ++ ( show maybeCompanyFile ) ++ "\n" ++
+                                     "            " ++ displaymode ++ " -> displaymode: "  ++ ( show maybeModeString ) 
