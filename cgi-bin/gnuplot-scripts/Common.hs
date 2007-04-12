@@ -13,8 +13,8 @@ gnuplot_timeseries_settings = "set xdata time\n" ++  	                -- The x a
                               "  set format x \"%b %d\""	        -- On the x-axis, we want tics like Jun 10'
 
 
-gen_gnuplot_script style function = let maybePlotCmd = lookup style style_to_plotcmd 
-                                        style_to_plotcmd =  [("math-2d","plot"),("math-3d","splot")]
-                                      in case maybePlotCmd of
-                                           Just plotcmd -> putStrLn $ gnuplot_math_settings ++ "\n" ++ plotcmd ++ " "  ++ function
-                                           _            -> error $ "bad style: " ++ style
+gen_gnuplot_math_script style function = let maybePlotCmd = lookup style style_to_plotcmd 
+                                             style_to_plotcmd =  [("math-2d","plot"),("math-3d","splot")]
+                                           in case maybePlotCmd of
+                                                Just plotcmd -> putStrLn $ gnuplot_math_settings ++ "\n" ++ plotcmd ++ " "  ++ function
+                                                _            -> error $ "bad style: " ++ style
