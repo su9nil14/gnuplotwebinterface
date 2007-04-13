@@ -21,7 +21,7 @@ gen_gnuplot_math_script style function = let maybePlotCmd = lookup style style_t
                                                 Just plotcmd -> putStrLn $ gnuplot_math_settings ++ "\n" ++ plotcmd ++ " "  ++ function
                                                 _            -> error $ "bad style: " ++ style
 
-gen_gnuplot_financial_script :: String -> String -> String -> String -> IO ()
+gen_gnuplot_financial_script :: String -> String -> String -> String -> Maybe String
 gen_gnuplot_financial_script company displaymode startDate endDate
     = let maybeCompanyFile = lookup company     company_to_companyfile 
           maybeModeString  = lookup displaymode displaymode_to_modestring
@@ -35,11 +35,11 @@ gen_gnuplot_financial_script company displaymode startDate endDate
                   maybeTitleEnd ) of
                 ( Just companyfile,
                   Just modestring,
-                  Just titleEnd) -> putStrLn $ gnuplot_timeseries_settings ++ "\n" ++
+                  Just titleEnd) -> Just $ gnuplot_timeseries_settings ++ "\n" ++
                               "plot [\"" ++ startDate ++ "\":\"" ++ endDate ++ "\"]"
                               ++ " '" ++ companyfile ++ "'"
                               ++ modestring
                               ++ " title \"" ++ company ++ " " ++ titleEnd ++ "\""
-                _ -> error $ "bad lookup. " ++ company ++     " -> company file: " ++ ( show maybeCompanyFile ) ++ "\n" ++
-                             "            " ++ displaymode ++ " -> displaymode: "  ++ ( show maybeModeString ) ++ "\n" ++
-                             "            " ++ displaymode ++ " -> titleEnd: "     ++ ( show maybeTitleEnd) 
+--                 _ -> error $ "bad lookup. " ++ company ++     " -> company file: " ++ ( show maybeCompanyFile ) ++ "\n" ++
+--                              "            " ++ displaymode ++ " -> displaymode: "  ++ ( show maybeModeString ) ++ "\n" ++
+--                              "            " ++ displaymode ++ " -> titleEnd: "     ++ ( show maybeTitleEnd) 
