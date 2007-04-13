@@ -13,16 +13,23 @@ main = do args <- getArgs
 
 
 output_wrapper company displaymode startDate endDate =
-    let maybeScript  = gen_gnuplot_financial_script company
-                                                    ( lookup company company_to_companyfile  )
-                                                    ( lookup displaymode displaymode_to_modestring)
-                                                    ( lookup displaymode displaymode_to_titleend )
+    let maybeCompanyFile = lookup company company_to_companyfile
+        maybeModeString  = lookup displaymode displaymode_to_modestring
+        maybeTitleEnd    = lookup displaymode displaymode_to_titleend 
+        maybeScript  = gen_gnuplot_financial_script company
+                                                    ( maybeCompanyFile  )
+                                                    ( maybeModeString )
+                                                    ( maybeTitleEnd )
                                                     startDate endDate
           in 
            case maybeScript of 
              Just script -> putStrLn script
              _           -> error $ unwords ["bad script for ",
-                                              company,
-                                              displaymode,
+                                              company, "->", (show maybeCompanyFile), ",", "\n",
+                                              displaymode, "->", (show maybeModeString), "->", (show maybeTitleEnd),
                                               startDate,
                                               endDate]
+
+--                 _ -> error $ "bad lookup. " ++ company ++     " -> company file: " ++ ( show maybeCompanyFile ) ++ "\n" ++
+--                              "            " ++ displaymode ++ " -> displaymode: "  ++ ( show maybeModeString ) ++ "\n" ++
+--                              "            " ++ displaymode ++ " -> titleEnd: "     ++ ( show maybeTitleEnd) 
