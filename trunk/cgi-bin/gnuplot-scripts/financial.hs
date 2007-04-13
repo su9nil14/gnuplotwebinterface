@@ -8,14 +8,19 @@ main = do args <- getArgs
                          "                $ runghc ./financial.hs cisco candles 31-May-04 11-Jun-04"
           case args of
             [company, displaymode, startDate, endDate]
-              -> do let maybeCompanyFile = lookup company     company_to_companyfile 
-                        maybeModeString  = lookup displaymode displaymode_to_modestring
-                        maybeTitleEnd    = lookup displaymode displaymode_to_titleend 
-                        maybeScript  = gen_gnuplot_financial_script company maybeCompanyFile maybeModeString
-                                                                        maybeTitleEnd startDate endDate
+              -> let maybeScript  = gen_gnuplot_financial_script company
+                                                                    ( lookup company company_to_companyfile  )
+                                                                    ( lookup displaymode displaymode_to_modestring)
+                                                                    ( lookup displaymode displaymode_to_titleend )
+                                                                    startDate endDate
+                   in 
                     case maybeScript of 
                       Just script -> putStrLn script
-                      _           -> error $ unwords ["bad script for ", company, displaymode, startDate, endDate]
+                      _           -> error $ unwords ["bad script for ",
+                                                       company,
+                                                       displaymode,
+                                                       startDate,
+                                                       endDate]
             _ -> error $ "bad arguments: " ++ ( show args ) ++ "\n" ++ usagemsg
 
 
