@@ -27,27 +27,19 @@ displaymode_to_modestring = [("points", "using 1:2 with linespoints"),
                    ("candles","using 1:($2+$3+$4+$5)/4:4:3 with yerrorbars")]
 displaymode_to_titleend = [("points","daily prices"),("candles","opening prices")]
 
-gen_gnuplot_financial_script :: String -> Maybe String -> Maybe String -> Maybe String -> String -> String -> Maybe String
-gen_gnuplot_financial_script company (Just companyfile ) ( Just modestring) ( Just titleEnd ) startDate endDate
-    = Just $ gnuplot_timeseries_settings ++ "\n" ++
-                              "plot [\"" ++ startDate ++ "\":\"" ++ endDate ++ "\"]"
-                              ++ " '" ++ companyfile ++ "'"
-                              ++ modestring
-                              ++ " title \"" ++ company ++ " " ++ titleEnd ++ "\""
-gen_gnuplot_financial_script _ _ _ _ _ _ = Nothing
-
 financial_output_wrapper :: String -> String -> String -> String -> IO ()
 financial_output_wrapper company displaymode startDate endDate =
   do
     let  maybeCompanyFile = lookup company company_to_companyfile
-    case maybeCompanyFile of Nothing -> error $ "no company file for " ++ company
-                             _ -> return ()
+    validate_arg "company" company maybeCompanyFile
+
     let  maybeModeString  = lookup displaymode displaymode_to_modestring
-    case maybeModeString of Nothing -> error $ "no mode string for " ++ displaymode
-                            _ -> return ()
+    validate_arg "display mode" displaymode maybeModeString
+
+
     let  maybeTitleEnd = lookup displaymode displaymode_to_titleend 
-    case maybeTitleEnd of Nothing -> error $ "no title end for " ++ displaymode
-                          _ -> return ()
+    validate_arg "title end" displaymode maybeTitleEnd
+
     let maybeScript  = gen_gnuplot_financial_script company
                                                     ( maybeCompanyFile  )
                                                     ( maybeModeString )
@@ -56,4 +48,18 @@ financial_output_wrapper company displaymode startDate endDate =
     case maybeScript of 
              Just script -> putStrLn script
              _           -> error $ "bad script"
- 
+
+gen_gnuplot_financial_script :: String -> Maybe String -> Maybe String -> Maybe String -> String -> String -> Maybe String
+gen_gnuplot_financial_script company (Just companyfile ) ( Just modestring) ( Just titleEnd ) startDate endDate
+    = Just $ gnuplot_timeseries_settings ++ "\n" ++
+                    "plot [\"" ++ startDate ++ "\":\"" ++ endDate ++ "\"]"
+             ++ " '" ++ companyfile ++ "'"
+             ++ modestring
+             ++ " title \"" ++ company ++ " " ++ titleEnd ++ "\""
+
+
+validate_arg :: String -> String -> (Maybe a) -> IO ()
+validate_arg argname arg maybeTransformedArg =
+    case maybeTransformedArg of
+      Nothing -> error $ "no transformed " ++ argname ++ " arg for " ++ arg
+      _ -> return ()
