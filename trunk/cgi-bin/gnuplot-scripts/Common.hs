@@ -36,8 +36,9 @@ gen_gnuplot_financial_script company (Just companyfile ) ( Just modestring) ( Ju
              ++ " title \"" ++ company ++ " " ++ titleEnd ++ "\""
 
 
-validate_arg :: String -> String -> (Maybe a) -> IO ()
-validate_arg argname arg maybeTransformedArg =
+validate_arg :: String -> String -> (Maybe a) -> String -> IO ()
+validate_arg argname arg maybeTransformedArg usagemsg =
     case maybeTransformedArg of
-      Nothing -> error $ "no transformed " ++ argname ++ " arg for " ++ arg
+      Nothing -> error $ "no transformed " ++ argname ++ " arg for " ++ arg ++ "\n"
+                         ++ usagemsg
       _ -> return ()
