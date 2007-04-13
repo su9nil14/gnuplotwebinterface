@@ -35,4 +35,25 @@ gen_gnuplot_financial_script company (Just companyfile ) ( Just modestring) ( Ju
                               ++ modestring
                               ++ " title \"" ++ company ++ " " ++ titleEnd ++ "\""
 gen_gnuplot_financial_script _ _ _ _ _ _ = Nothing
+
+financial_output_wrapper :: String -> String -> String -> String -> IO ()
+financial_output_wrapper company displaymode startDate endDate =
+  do
+    let  maybeCompanyFile = lookup company company_to_companyfile
+    case maybeCompanyFile of Nothing -> error $ "no company file for " ++ company
+                             _ -> return ()
+    let  maybeModeString  = lookup displaymode displaymode_to_modestring
+    case maybeModeString of Nothing -> error $ "no mode string for " ++ displaymode
+                            _ -> return ()
+    let  maybeTitleEnd = lookup displaymode displaymode_to_titleend 
+    case maybeTitleEnd of Nothing -> error $ "no title end for " ++ displaymode
+                          _ -> return ()
+    let maybeScript  = gen_gnuplot_financial_script company
+                                                    ( maybeCompanyFile  )
+                                                    ( maybeModeString )
+                                                    ( maybeTitleEnd )
+                                                    startDate endDate
+    case maybeScript of 
+             Just script -> putStrLn script
+             _           -> error $ "bad script"
  
