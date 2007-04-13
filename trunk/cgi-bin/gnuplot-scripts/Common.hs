@@ -27,28 +27,6 @@ displaymode_to_modestring = [("points", "using 1:2 with linespoints"),
                    ("candles","using 1:($2+$3+$4+$5)/4:4:3 with yerrorbars")]
 displaymode_to_titleend = [("points","daily prices"),("candles","opening prices")]
 
-financial_output_wrapper :: String -> String -> String -> String -> IO ()
-financial_output_wrapper company displaymode startDate endDate =
-  do
-    let  maybeCompanyFile = lookup company company_to_companyfile
-    validate_arg "company" company maybeCompanyFile
-
-    let  maybeModeString  = lookup displaymode displaymode_to_modestring
-    validate_arg "display mode" displaymode maybeModeString
-
-
-    let  maybeTitleEnd = lookup displaymode displaymode_to_titleend 
-    validate_arg "title end" displaymode maybeTitleEnd
-
-    let maybeScript  = gen_gnuplot_financial_script company
-                                                    ( maybeCompanyFile  )
-                                                    ( maybeModeString )
-                                                    ( maybeTitleEnd )
-                                                    startDate endDate
-    case maybeScript of 
-             Just script -> putStrLn script
-             _           -> error $ "bad script"
-
 gen_gnuplot_financial_script :: String -> Maybe String -> Maybe String -> Maybe String -> String -> String -> Maybe String
 gen_gnuplot_financial_script company (Just companyfile ) ( Just modestring) ( Just titleEnd ) startDate endDate
     = Just $ gnuplot_timeseries_settings ++ "\n" ++

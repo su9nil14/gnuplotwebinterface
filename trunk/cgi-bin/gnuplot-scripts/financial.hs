@@ -13,3 +13,24 @@ main = do args <- getArgs
 
 
 
+financial_output_wrapper :: String -> String -> String -> String -> IO ()
+financial_output_wrapper company displaymode startDate endDate =
+  do
+    let  maybeCompanyFile = lookup company company_to_companyfile
+    validate_arg "company" company maybeCompanyFile
+
+    let  maybeModeString  = lookup displaymode displaymode_to_modestring
+    validate_arg "display mode" displaymode maybeModeString
+
+
+    let  maybeTitleEnd = lookup displaymode displaymode_to_titleend 
+    validate_arg "title end" displaymode maybeTitleEnd
+
+    let maybeScript  = gen_gnuplot_financial_script company
+                                                    ( maybeCompanyFile  )
+                                                    ( maybeModeString )
+                                                    ( maybeTitleEnd )
+                                                    startDate endDate
+    case maybeScript of 
+             Just script -> putStrLn script
+             _           -> error $ "bad script"
