@@ -29,7 +29,3 @@ output_wrapper company displaymode startDate endDate =
                                               displaymode, "->", (show maybeModeString), "->", (show maybeTitleEnd),
                                               startDate,
                                               endDate]
-
---                 _ -> error $ "bad lookup. " ++ company ++     " -> company file: " ++ ( show maybeCompanyFile ) ++ "\n" ++
---                              "            " ++ displaymode ++ " -> displaymode: "  ++ ( show maybeModeString ) ++ "\n" ++
---                              "            " ++ displaymode ++ " -> titleEnd: "     ++ ( show maybeTitleEnd) 
