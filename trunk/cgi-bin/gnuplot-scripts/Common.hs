@@ -21,21 +21,15 @@ gen_gnuplot_math_script style function = let maybePlotCmd = lookup style style_t
                                                 Just plotcmd -> putStrLn $ gnuplot_math_settings ++ "\n" ++ plotcmd ++ " "  ++ function
                                                 _            -> error $ "bad style: " ++ style
 
-gen_gnuplot_financial_script :: String -> String -> String -> String -> Maybe String
-gen_gnuplot_financial_script company displaymode startDate endDate
-    = let maybeCompanyFile = lookup company     company_to_companyfile 
-          maybeModeString  = lookup displaymode displaymode_to_modestring
-          maybeTitleEnd    = lookup displaymode displaymode_to_titleend 
-          company_to_companyfile =  [("ibm","data/ibm.dat"),("cisco","data/cisco.dat")]
-          displaymode_to_modestring = [("points", "using 1:2 with linespoints"),
-                                       ("candles","using 1:($2+$3+$4+$5)/4:4:3 with yerrorbars")]
-          displaymode_to_titleend = [("points","daily prices"),("candles","opening prices")]
-        in case ( maybeCompanyFile,
-                  maybeModeString,
-                  maybeTitleEnd ) of
-                ( Just companyfile,
-                  Just modestring,
-                  Just titleEnd) -> Just $ gnuplot_timeseries_settings ++ "\n" ++
+
+company_to_companyfile =  [("ibm","data/ibm.dat"),("cisco","data/cisco.dat")]
+displaymode_to_modestring = [("points", "using 1:2 with linespoints"),
+                   ("candles","using 1:($2+$3+$4+$5)/4:4:3 with yerrorbars")]
+displaymode_to_titleend = [("points","daily prices"),("candles","opening prices")]
+
+gen_gnuplot_financial_script :: String -> Maybe String -> Maybe String -> Maybe String -> String -> String -> Maybe String
+gen_gnuplot_financial_script company (Just companyfile ) ( Just modestring) ( Just titleEnd ) startDate endDate
+    = Just $ gnuplot_timeseries_settings ++ "\n" ++
                               "plot [\"" ++ startDate ++ "\":\"" ++ endDate ++ "\"]"
                               ++ " '" ++ companyfile ++ "'"
                               ++ modestring
