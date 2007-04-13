@@ -34,6 +34,7 @@ gen_gnuplot_financial_script company (Just companyfile ) ( Just modestring) ( Ju
                               ++ " '" ++ companyfile ++ "'"
                               ++ modestring
                               ++ " title \"" ++ company ++ " " ++ titleEnd ++ "\""
+gen_gnuplot_financial_script _ _ _ _ _ _ = Nothing      
 --                 _ -> error $ "bad lookup. " ++ company ++     " -> company file: " ++ ( show maybeCompanyFile ) ++ "\n" ++
 --                              "            " ++ displaymode ++ " -> displaymode: "  ++ ( show maybeModeString ) ++ "\n" ++
 --                              "            " ++ displaymode ++ " -> titleEnd: "     ++ ( show maybeTitleEnd) 
