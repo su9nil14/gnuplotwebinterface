@@ -43,8 +43,7 @@ financial_output2 company displaymode startDate endDate = financial_script
      titleEnd    = lookupWith ("no title end for " ++ displaymode)
                    displaymode displaymode_to_titleend
 
-lookupWith :: (Eq a) => String -> a -> [(a,String)] -> Either String String
-lookupWith error key assocs = maybe (Left error) Right $ lookup key assocs
+
 
 class MyString a
    where mystr :: a -> Either String String
@@ -59,3 +58,5 @@ x <++> y = do xv <- mystr x
               yv <- mystr y
               return $ xv ++ yv
 
+lookupWith :: (Eq a) => String -> a -> [(a,String)] -> Either String String
+lookupWith error key assocs = maybe (Left error) Right $ lookup key assocs

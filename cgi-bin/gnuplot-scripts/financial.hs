@@ -31,6 +31,6 @@ financial_output company displaymode startDate endDate = financial_script
  titleEnd    = lookupWith (error $ "no title end for " ++ displaymode)
                  displaymode displaymode_to_titleend
 
- lookupWith error key assocs = maybe error id $ lookup key assocs
+lookupWith error key assocs = maybe error id $ lookup key assocs
 
 
