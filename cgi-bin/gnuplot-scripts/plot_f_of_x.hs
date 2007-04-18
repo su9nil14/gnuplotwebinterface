@@ -10,5 +10,5 @@ main = do args <- getArgs
             _                -> error $ "bad arguments: " ++ ( show args ) ++ "\n" ++ usagemsg
 
 
-
+-- move io code out of common.hs and back into here
 
