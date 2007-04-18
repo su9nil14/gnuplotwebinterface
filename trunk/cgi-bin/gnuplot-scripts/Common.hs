@@ -27,3 +27,5 @@ displaymode_to_modestring = [("points", "using 1:2 with linespoints"),
                    ("candles","using 1:($2+$3+$4+$5)/4:4:3 with yerrorbars")]
 displaymode_to_titleend = [("points","daily prices"),("candles","opening prices")]
 
+
+
