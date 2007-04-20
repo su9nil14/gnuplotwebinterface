@@ -6,8 +6,8 @@ import Common
 main = do args <- getArgs
           case args of
             [company, displaymode, startDate, endDate]
-              -> do let result = financial_output2 company displaymode startDate endDate 
-                    either putStrLn putStrLn result
+              -> let result = financial_output2 company displaymode startDate endDate 
+                    in either error putStrLn result
             _ -> error $ "bad arguments: " ++ ( show args ) ++ "\n" ++ usagemsg
 
 usagemsg = "usage examples: $ runghc ./financial.hs ibm   points  31-May-04 11-Jun-04 \n" ++
