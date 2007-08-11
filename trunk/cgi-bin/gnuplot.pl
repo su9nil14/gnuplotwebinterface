@@ -14,11 +14,9 @@ $ENV{"PATH"} = "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/us
 my $host="64.22.71.11";
 my $virtualdir="gnuplot/tmp";
 
-my $outdir="../tmp";
-my $outps="plot.ps";
+my $outdir="../html/tmp";
 my $outpng = "plot.png";
 
-my $psfile = "$outdir/$outps";
 my $pngfile = "$outdir/$outpng";
 
 my $ploturl="http://$host/$virtualdir/$outpng";
